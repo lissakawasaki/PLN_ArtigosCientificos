@@ -1,5 +1,5 @@
-from PyPDF2 import PdfReader #Biblioteca para manipulação de arquivos PDF
-import nltk #Biblioteca para "tokentização"
+from PyPDF2 import PdfReader
+import nltk
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 
@@ -22,25 +22,28 @@ stop_words = [
 
 def extract_text_lowercase():
     all_text = ""
-    with open('arquive.pdf', 'rb') as file:
+    with open('sample-local-pdf.pdf', 'rb') as file:
         reader = PdfReader(file)
         for page in reader.pages:
             text = page.extract_text()
             if text:
-                all_text += text.lower()
+                all_text += text.lower() + " "
     return all_text
 
+# Extrair texto
 all_text = extract_text_lowercase()
+
+# Tokenizar
 token_words = word_tokenize(all_text)
 
+# Filtrar stopwords e manter apenas palavras alfabéticas
 token_texts = []
-
 for token in token_words:
-    token_lower = token.lower() 
+    token_lower = token.lower()
+    if token_lower not in stop_words and token_lower.isalpha():
+        token_texts.append(token_lower)
 
-if token_lower not in stop_words and token_lower.isalpha():
-    token_texts.append(token_lower)
-
+# Calcular frequência
 frequency = {}
 for token in token_texts:
     if token in frequency:
@@ -48,9 +51,7 @@ for token in token_texts:
     else:
         frequency[token] = 1
 
-tuples_list = list(frequency.items())
+# Ordenar em ordem decrescente
+ordened_list = sorted(frequency.items(), key=lambda x: x[1], reverse=True)
 
-ordened_list = sorted(tuples_list, key=lambda x: x[1], reverse=True) 
-
-start_references = token_texts.find('references')
-references = token_texts[start_references + len('references'):]
+print(ordened_list)
