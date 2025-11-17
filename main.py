@@ -30,20 +30,16 @@ def extract_text_lowercase():
                 all_text += text.lower() + " "
     return all_text
 
-# Extrair texto
-all_text = extract_text_lowercase()
 
-# Tokenizar
+all_text = extract_text_lowercase()
 token_words = word_tokenize(all_text)
 
-# Filtrar stopwords e manter apenas palavras alfabéticas
 token_texts = []
 for token in token_words:
     token_lower = token.lower()
     if token_lower not in stop_words and token_lower.isalpha():
         token_texts.append(token_lower)
 
-# Calcular frequência
 frequency = {}
 for token in token_texts:
     if token in frequency:
@@ -51,7 +47,6 @@ for token in token_texts:
     else:
         frequency[token] = 1
 
-# Ordenar em ordem decrescente
 ordened_list = sorted(frequency.items(), key=lambda x: x[1], reverse=True)
 
 print(ordened_list)
