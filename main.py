@@ -1,7 +1,7 @@
 from PyPDF2 import PdfReader
-import nltk
-nltk.download('punkt')
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import nltk
 import re
 
 
@@ -65,7 +65,7 @@ references_lines = references_text.split("\n")
 references = []
 current_ref = ""
 
-pattern = re.compile(r"^\[\d+\]")   
+pattern = re.compile(r"^\[\d+\]")  
 
 lines_without_ref = 0
 MAX_EMPTY = 10  
@@ -123,10 +123,10 @@ def find_relevant_paragraphs(paragraphs, topics):
 
 relevant_paragraphs = find_relevant_paragraphs(paragraphs, topics)
 
-# print("\n=== RELEVANT PARAGRAPHS ===\n")
-# # for topic, paras in relevant.items():
-#     print(f"\n--- {topic.upper()} ---\n")
-#     for p in paras:
-#         print(p)
-#         print()
+print("\n=== RELEVANT PARAGRAPHS ===\n")
+for topic, paras in relevant.items():
+    print(f"\n--- {topic.upper()} ---\n")
+    for p in paras:
+        print(p)
+        print()
 
