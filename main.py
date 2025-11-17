@@ -3,9 +3,7 @@ import nltk
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 import re
-from transformers import pipeline
 
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 stop_words = [
     "a", "an", "and", "the", "but", "or", "because", "as", "until", "while", 
@@ -125,11 +123,6 @@ def find_relevant_paragraphs(paragraphs, topics):
 
 relevant_paragraphs = find_relevant_paragraphs(paragraphs, topics)
 
-def summarize_text(text, max_tokens=1000):
-    text = text[:4000] 
-    summary = summarizer(text, max_length=200, min_length=80, do_sample=False)
-    return summary[0]['summary_text']
-
 print("\n=== RELEVANT PARAGRAPHS ===\n")
 for topic, paras in relevant.items():
     print(f"\n--- {topic.upper()} ---\n")
@@ -137,5 +130,3 @@ for topic, paras in relevant.items():
         print(p)
         print()
 
-print("\n=== SUMARY ===\n")
-print(summarize_text(all_text))
